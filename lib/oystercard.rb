@@ -2,9 +2,11 @@ class Oystercard
 
   DEAFULT_LIMIT = 90
 
+  # attr_reader :in_journey
   attr_reader :card_balance
 
   def initialize
+    @journey = false
     @card_balance = 0
   end
 
@@ -23,6 +25,10 @@ class Oystercard
 
   def touch_out
     @journey = false
+  end
+
+  def in_journey?
+    @journey
   end
 
 end
