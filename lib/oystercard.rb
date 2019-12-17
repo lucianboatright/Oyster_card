@@ -20,11 +20,19 @@ class Oystercard
   end
 
   def touch_in
-    @journey = true
+    if @journey == true
+      raise "You are already in a journey"
+    else 
+      @journey = true
+    end
   end  
 
   def touch_out
+    # if @journey == false
+    #   raise "You are already out of the journey"
+    # else
     @journey = false
+
   end
 
   def in_journey?

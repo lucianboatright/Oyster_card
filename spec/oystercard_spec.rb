@@ -10,9 +10,7 @@ describe Oystercard do
 
   describe '#top_up' do
     # it 'Test top_up adds amount to variable' do
-
     it { is_expected.to respond_to(:top_up).with(1).argument }
-
 
     it 'Test when amount is added to top_up' do
 
@@ -46,6 +44,9 @@ describe Oystercard do
       expect(subject).not_to be_in_journey
     end
   end
+
+  # describe 'amount check' do
+  #   it 'Test that when card_balance = 0 journey is not possible' do
 end
 
 

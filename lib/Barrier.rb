@@ -1,6 +1,9 @@
 # require 'oystercard.rb'
 
 class Barrier
+
+  # FAIR = 1
+
   def touch_in(card)
     card.touch_in
   end

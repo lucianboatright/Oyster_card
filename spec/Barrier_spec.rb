@@ -13,5 +13,10 @@ describe Barrier do
     it 'Touch_out changes journey to false' do
       expect(subject.touch_out(card)).to eq false
     end
-  end
+
+    it 'Test that when card_balance = 0 journey is not possible' do
+      expect{ subject.touch_out(card) }.to change{ subject.card_balance}.by(-Barrier::FAIR)
+    end
+  end     # expect{ subject.deduct 1 }.to change{ subject.card_balance }.by -1
+        # card_limit = Oystercard::DEAFULT_LIMIT 
 end
