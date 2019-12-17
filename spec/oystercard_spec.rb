@@ -7,4 +7,9 @@ describe Oystercard do
     expect(subject.card_balance).to eq(0) # no creating instance prior to test
   end
 
+  it 'Test top_up adds amount to variable' do
+    
+    expect(subject.top_up(10)).to eq(10)
+  end
+
 end
