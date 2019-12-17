@@ -27,7 +27,12 @@ describe Oystercard do
       subject.top_up(card_limit) #call default limit on top_up to set car amount to default 
       expect { subject.top_up 1 }.to raise_error 'You have reached the limit of £90' # not add one to car which will make amount 1 over 90 
     end
+  end
 
+  describe "#deduct" do
+    it 'Takes amount from balance' do
+      expect{ subject.deduct 1 }.to change{ subject.card_balance }.by -1
+    end
   end 
 end
 
