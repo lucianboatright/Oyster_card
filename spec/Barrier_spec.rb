@@ -8,4 +8,10 @@ describe Barrier do
       expect(subject.touch_in(card)).to eq true
     end
   end
+
+  describe '#touch_out' do
+    it 'Touch_out changes journey to false' do
+      expect(subject.touch_out(card)).to eq false
+    end
+  end
 end
