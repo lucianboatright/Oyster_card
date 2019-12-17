@@ -13,7 +13,17 @@ describe Oystercard do
 
     it { is_expected.to respond_to(:top_up).with(1).argument }
 
-    # expect{ subject.top_up(1) }.to change{ subject.card_balance }.by (1)
+    it 'Test when amount is added to top_up' do
+
+      expect{ subject.top_up(1) }.to change{ subject.card_balance }.by (1)
+    end
+
+    it 'Test limit of card_balance to eq 90' do
+      card_limit = Oystercard::DEFAULT_LIMIT #set card_limit to eq default limit
+      card_1.top_up(card_limit) #call default limit on top_up to set car amount to default 
+      expect { subject.top_up(1) }.to raise_error 'You have reached the limit of £90' # not add one to car which will make amount 1 over 90 
+    end
+
   end 
 end
 
