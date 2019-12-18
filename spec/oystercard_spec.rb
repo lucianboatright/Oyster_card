@@ -31,19 +31,20 @@ describe Oystercard do
   end 
 
   describe "#journey" do
+    let(:card) { Oystercard.new }
     it 'Test journey is false at creation' do
-      expect(subject).not_to be_in_journey
+      expect(card).not_to be_in_journey
     end
     it 'Test touch_in converts journey to true' do
-      subject.top_up(5)
-      subject.touch_in
-      expect(subject).to be_in_journey
+      card.top_up(5)
+      card.touch_in
+      expect(card).to be_in_journey
     end
     it 'Test after touch_out journey is false' do
-      subject.top_up(5)
-      subject.touch_in
-      subject.touch_out
-      expect(subject).not_to be_in_journey
+      card.top_up(5)
+      card.touch_in
+      card.touch_out
+      expect(card).not_to be_in_journey
     end
   end 
 
@@ -51,13 +52,20 @@ describe Oystercard do
     it 'Tests that balance less than fair stops touch_in' do
       expect { subject.touch_in }.to raise_error "Sorry you don't have enough!!"
     end
-    it 'On touch out remove fare' do
+    it 'Test that touch_out removes fair from card balance' do
       subject.top_up(5)
       subject.touch_in
-      expect { subject.touch_out }.to change { subject.card_balance }.by -1 #Oystercard::FAIR
+      expect { subject.touch_out }.to change { subject.card_balance }.by -Oystercard::FAIR
     end
   end
-  #   end
+
+  describe "location change" do
+    let(:location) { Oystercard.new }
+    it 'Test that touch_in adds location to card attribute' do
+      subject.top_up(5)
+      expect { subject.touch_in(location) }.to change { subject }.by location
+    end
+  end
 end
 
 #   let(:card) { Oystercard.new }
