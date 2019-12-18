@@ -54,7 +54,7 @@ describe Oystercard do
     it 'On touch out remove fare' do
       subject.top_up(5)
       subject.touch_in
-      expect { subject.touch_out }.to change { subject.card_balance }.by 1
+      expect { subject.touch_out }.to change { subject.card_balance }.by -1 #Oystercard::FAIR
     end
   end
   #   end

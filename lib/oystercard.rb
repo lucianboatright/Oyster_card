@@ -33,6 +33,7 @@ class Oystercard
   def touch_out
     raise "You are already out of the journey" if @journey == false
     @journey = false
+    @card_balance -= FAIR
   end
 
   def in_journey?
