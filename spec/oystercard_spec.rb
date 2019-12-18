@@ -14,7 +14,7 @@ describe Oystercard do
 
     it 'Test when amount is added to top_up' do
 
-      expect{ subject.top_up Oystercard::FAIR  }.to change{ subject.card_balance }.by Oystercard::FAIR 
+      expect { subject.top_up Oystercard::FAIR  }.to change { subject.card_balance }.by Oystercard::FAIR 
     end
 
     it 'Test limit of card_balance to eq 90' do
@@ -26,7 +26,7 @@ describe Oystercard do
 
   describe "#deduct" do
     it 'Takes amount from balance' do
-      expect{ subject.deduct Oystercard::FAIR }.to change{ subject.card_balance }.by -Oystercard::FAIR 
+      expect { subject.deduct Oystercard::FAIR }.to change{ subject.card_balance }.by -Oystercard::FAIR 
     end
   end 
 
@@ -50,6 +50,11 @@ describe Oystercard do
   describe 'minimum fair' do
     it 'Tests that balance less than fair stops touch_in' do
       expect { subject.touch_in }.to raise_error "Sorry you don't have enough!!"
+    end
+    it 'On touch out remove fare' do
+      subject.top_up(5)
+      subject.touch_in
+      expect { subject.touch_out }.to change { subject.card_balance }.by 1
     end
   end
   #   end
