@@ -1,6 +1,8 @@
 class Oystercard
 
   DEAFULT_LIMIT = 90
+  FAIR = 1
+
 
   # attr_reader :in_journey
   attr_reader :card_balance
@@ -20,28 +22,62 @@ class Oystercard
   end
 
   def touch_in
-    if @journey == true
-      raise "You are already in a journey"
-    else 
-      @journey = true
-    end
+
+    raise "You are already in a journey" if @journey == true
+
+    fail "Sorry you don't have enough!!" if @card_balance < 1
+
+    @journey = true
   end  
 
   def touch_out
-    # if @journey == false
-    #   raise "You are already out of the journey"
-    # else
+    raise "You are already out of the journey" if @journey == false
     @journey = false
-
   end
 
   def in_journey?
     @journey
   end
 
+  #########
+  # def start(card)
+  #   # if @card_balance < FAIR
+  #   #   raise "Sorry you don't have enough!!"
+  #   card.touch_in
+  #   # end
+  # end
+
+  # def stop(card)
+  #   card.touch_out
+  # end
+###########
+
+
 end
 
 
+
+
+
+
+
+
+# class Barrier
+
+#   FAIR = 1
+
+#   def touch_in(card)
+#     # if @card_balance < FAIR
+#     #   raise "Sorry you don't have enough!!"
+#     card.touch_in
+#     # end
+#   end
+
+#   def touch_out(card)
+#     card.touch_out
+#   end
+
+# end
 
 
 # class Oystercard

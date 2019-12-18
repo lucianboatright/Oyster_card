@@ -35,16 +35,40 @@ describe Oystercard do
       expect(subject).not_to be_in_journey
     end
     it 'Test touch_in converts journey to true' do
+      subject.top_up(5)
       subject.touch_in
       expect(subject).to be_in_journey
     end
     it 'Test after touch_out journey is false' do
+      subject.top_up(5)
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
     end
-  end     
+  end 
+
+  describe '#minimum fair' do
+    it 'Tests that balance less than fair stops touch_in' do
+      expect { subject.touch_in }.to raise_error "Sorry you don't have enough!!"
+    end
+  end
+  #   end
 end
+
+#   let(:card) { Oystercard.new }
+#   describe '#touch_in' do
+#     it 'Touch_in changes journey status to true' do
+#       expect(subject.start(card)).to eq true
+#     end
+#   end
+
+#   describe '#touch_out' do
+#     it 'Touch_out changes journey to false' do
+#       expect(subject.stop(card)).to eq false
+#     end
+#   end
+# end    
+
 
 
 # describe Oystercard do
