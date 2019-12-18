@@ -47,7 +47,7 @@ describe Oystercard do
     end
   end 
 
-  describe '#minimum fair' do
+  describe 'minimum fair' do
     it 'Tests that balance less than fair stops touch_in' do
       expect { subject.touch_in }.to raise_error "Sorry you don't have enough!!"
     end

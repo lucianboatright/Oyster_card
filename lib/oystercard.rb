@@ -25,7 +25,7 @@ class Oystercard
 
     raise "You are already in a journey" if @journey == true
 
-    fail "Sorry you don't have enough!!" if @card_balance < 1
+    fail "Sorry you don't have enough!!" if @card_balance < FAIR
 
     @journey = true
   end  
