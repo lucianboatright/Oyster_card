@@ -21,9 +21,9 @@ class Oystercard
     @card_balance -= amount
   end
 
-  def touch_in
+  def touch_in(station)
 
-    raise "You are already in a journey" if @journey == true
+    # raise "You are already in a journey" if @journey == true
 
     fail "Sorry you don't have enough!!" if @card_balance < FAIR
 
@@ -40,19 +40,10 @@ class Oystercard
     @journey
   end
 
-  #########
-  # def start(card)
-  #   # if @card_balance < FAIR
-  #   #   raise "Sorry you don't have enough!!"
-  #   card.touch_in
-  #   # end
-  # end
 
-  # def stop(card)
-  #   card.touch_out
-  # end
-###########
-
+  def deduct(amount)
+    @card_balance -= amount
+  end
 
 end
 

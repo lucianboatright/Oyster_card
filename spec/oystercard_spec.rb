@@ -26,35 +26,37 @@ describe Oystercard do
 
   describe "#deduct" do
     it 'Takes amount from balance' do
+      # subject.top_up(5)
       expect { subject.deduct Oystercard::FAIR }.to change{ subject.card_balance }.by -Oystercard::FAIR 
     end
   end 
 
   describe "#journey" do
-    let(:card) { Oystercard.new }
+    let(:station) { double :station }
     it 'Test journey is false at creation' do
-      expect(card).not_to be_in_journey
+      expect(subject).not_to be_in_journey
     end
     it 'Test touch_in converts journey to true' do
-      card.top_up(5)
-      card.touch_in
-      expect(card).to be_in_journey
+      subject.top_up(5)
+      subject.touch_in(station)
+      expect(subject).to be_in_journey
     end
     it 'Test after touch_out journey is false' do
-      card.top_up(5)
-      card.touch_in
-      card.touch_out
-      expect(card).not_to be_in_journey
+      subject.top_up(5)
+      subject.touch_in(station)
+      subject.touch_out
+      expect(subject).not_to be_in_journey
     end
   end 
 
   describe 'minimum fair' do
+    let(:station) { double :station }
     it 'Tests that balance less than fair stops touch_in' do
-      expect { subject.touch_in }.to raise_error "Sorry you don't have enough!!"
+      expect { subject.touch_in(station) }.to raise_error "Sorry you don't have enough!!"
     end
     it 'Test that touch_out removes fair from card balance' do
       subject.top_up(5)
-      subject.touch_in
+      subject.touch_in(station)
       expect { subject.touch_out }.to change { subject.card_balance }.by -Oystercard::FAIR
     end
   end
@@ -62,6 +64,7 @@ describe Oystercard do
   describe "location change" do
     let(:station) { double :station }
     it  'stores the station on touch_in call' do
+      subject.top_up(5)
       subject.touch_in(station)
       expect(subject.entry_station).to eq station
     end
