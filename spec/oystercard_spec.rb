@@ -60,13 +60,22 @@ describe Oystercard do
   end
 
   describe "location change" do
-    let(:location) { Oystercard.new }
-    it 'Test that touch_in adds location to card attribute' do
-      subject.top_up(5)
-      expect { subject.touch_in(location) }.to change { subject }.by location
+    let(:station) { double :station }
+    it  'stores the station on touch_in call' do
+      subject.touch_in(station)
+      expect(subject.entry_station).to eq station
     end
   end
 end
+
+
+  #   let(:location) { Oystercard.new }
+  #   it 'Test that touch_in adds location to card attribute' do
+  #     subject.top_up(5)
+  #     expect { subject.touch_in(location) }.to change { subject }.by location
+  #   end
+  # end
+
 
 #   let(:card) { Oystercard.new }
 #   describe '#touch_in' do
