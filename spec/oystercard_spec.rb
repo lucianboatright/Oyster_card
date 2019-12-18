@@ -14,19 +14,19 @@ describe Oystercard do
 
     it 'Test when amount is added to top_up' do
 
-      expect{ subject.top_up 1 }.to change{ subject.card_balance }.by 1
+      expect{ subject.top_up Oystercard::FAIR  }.to change{ subject.card_balance }.by Oystercard::FAIR 
     end
 
     it 'Test limit of card_balance to eq 90' do
       card_limit = Oystercard::DEAFULT_LIMIT #set card_limit to eq default limit
       subject.top_up(card_limit) #call default limit on top_up to set car amount to default 
-      expect { subject.top_up 1 }.to raise_error 'You have reached the limit of £90' # not add one to car which will make amount 1 over 90 
+      expect { subject.top_up Oystercard::FAIR  }.to raise_error 'You have reached the limit of £90' # not add one to car which will make amount 1 over 90 
     end
   end
 
   describe "#deduct" do
     it 'Takes amount from balance' do
-      expect{ subject.deduct 1 }.to change{ subject.card_balance }.by -1
+      expect{ subject.deduct Oystercard::FAIR }.to change{ subject.card_balance }.by -Oystercard::FAIR 
     end
   end 
 
