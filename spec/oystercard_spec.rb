@@ -57,7 +57,14 @@ describe Oystercard do
       expect { subject.touch_out }.to change { subject.card_balance }.by -1 #Oystercard::FAIR
     end
   end
-  #   end
+
+  describe 'entry station' do
+    let(:station) { double :station }
+    it 'test that touch_in method attaches station to attribute' do
+      subject.touch_in(station)
+      expect(subject.entry_station).to eq station
+    end
+  end
 end
 
 #   let(:card) { Oystercard.new }
