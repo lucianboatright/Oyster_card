@@ -50,6 +50,7 @@ describe Oystercard do
 
   describe 'minimum fair' do
     let(:station) { double :station }
+    let(:station_2) { double :station }
     it 'Tests that balance less than fair stops touch_in' do
       expect { subject.touch_in(station) }.to raise_error "Sorry you don't have enough!!"
     end
@@ -63,6 +64,12 @@ describe Oystercard do
       subject.top_up(5)
       subject.touch_in(station)
       expect(subject.entry_station).to eq station
+    end
+    it 'stores journey value' do
+      subject.tou_up(5)
+      subject.touch_in(station)
+      subject.touch_out(station_2)
+      expect(subject.journey_history).to include?(staion,station_1)
     end
   end
 end
