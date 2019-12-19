@@ -3,9 +3,7 @@ class Oystercard
   DEAFULT_LIMIT = 90
   FAIR = 1
 
-
-  # attr_reader :in_journey
-  attr_reader :card_balance
+  attr_reader :card_balance, :entry_station
 
   def initialize
     @journey = false
@@ -21,23 +19,23 @@ class Oystercard
     @card_balance -= amount
   end
 
-  def touch_in
+  def touch_in(station)
 
-    raise "You are already in a journey" if @journey == true
+    fail "Sorry you don't have enough!!" if @card_balance < 1
 
-    fail "Sorry you don't have enough!!" if @card_balance < FAIR
-
-    @journey = true
+    @entry_station = station
   end  
 
   def touch_out
-    raise "You are already out of the journey" if @journey == false
-    @journey = false
-    @card_balance -= FAIR
+    # raise "You are already out of the journey" if @journey == false
+    # @journey = false
+    # @card_balance -= FAIR
+    deduct(FAIR)
+    @entry_station = nil
   end
 
   def in_journey?
-    @journey
+    !!entry_station
   end
 
   #########
