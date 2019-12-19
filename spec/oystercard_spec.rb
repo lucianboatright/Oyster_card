@@ -26,50 +26,51 @@ describe Oystercard do
 
   describe "#deduct" do
     it 'Takes amount from balance' do
-      expect { subject.deduct Oystercard::FAIR }.to change{ subject.card_balance }.by -Oystercard::FAIR 
+      expect { subject.deduct }.to change{ subject.card_balance }.by -Oystercard::FAIR 
     end
   end 
 
-  describe "#journey" do
-    let(:station) { double :station }
+  describe "#journey" do 
+    let(:entry_station) { double :station }
+    let(:exit_station) { double :station }
     it 'Test journey is false at creation' do
       expect(subject).not_to be_in_journey
     end
     it 'Test touch_in converts journey to true' do
       subject.top_up(5)
-      subject.touch_in(station)
+      subject.touch_in(entry_station)
       expect(subject).to be_in_journey
     end
     it 'Test after touch_out journey is false' do
       subject.top_up(5)
-      subject.touch_in(station)
-      subject.touch_out
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
       expect(subject).not_to be_in_journey
     end
   end 
 
   describe 'minimum fair' do
-    let(:station) { double :station }
-    let(:station_2) { double :station }
+    let(:entry_station) { double :station }
+    let(:exit_station) { double :station }
     it 'Tests that balance less than fair stops touch_in' do
-      expect { subject.touch_in(station) }.to raise_error "Sorry you don't have enough!!"
+      expect { subject.touch_in(entry_station) }.to raise_error "Sorry you don't have enough!!"
     end
     it 'On touch out remove fare' do
       subject.top_up(5)
-      subject.touch_in(station)
-      expect { subject.touch_out }.to change { subject.card_balance }.by -1 #Oystercard::FAIR
+      subject.touch_in(entry_station)
+      expect { subject.touch_out(exit_station) }.to change { subject.card_balance }.by -1 #Oystercard::FAIR
     end
 
     it 'test that touch_in method attaches station to attribute' do
       subject.top_up(5)
-      subject.touch_in(station)
-      expect(subject.entry_station).to eq station
+      subject.touch_in(entry_station)
+      expect(subject.entry_station).to eq entry_station
     end
     it 'stores journey value' do
-      subject.tou_up(5)
-      subject.touch_in(station)
-      subject.touch_out(station_2)
-      expect(subject.journey_history).to include?(staion,station_1)
+      subject.top_up(5)
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
+      expect(subject.journey_history).to eq ["#{entry_station}" => "#{exit_station}"]
     end
   end
 end
