@@ -14,4 +14,17 @@ describe JourneyLog do
       expect(subject.journey_history.length).to eq 2
     end
   end
+
+  describe '#finish' do
+    it 'assuming an earlier start, on finish the existing journey is updated with exit station' do
+      subject.start(entry_station)
+      subject.finish(exit_station)
+      expect(subject.journey_history.length).to eq 1
+    end
+    it 'creates new journey and adds it to journey history on calling finish twice without start' do
+      subject.finish(exit_station)
+      subject.finish(exit_station)
+      expect(subject.journey_history.length).to eq 2
+    end
+  end
 end
