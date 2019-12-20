@@ -24,12 +24,16 @@ describe Journey do
         expect(subject.fare).to eq(described_class::MINIMUM_FARE)
       end
 
-      it 'returns journey fare or penalty' do
-        subject = described_class.new(entry_station)
+      it 'return penalty fare if entry_station is nil' do
+        subject = described_class.new(nil)
+        subject.finish_journey(exit_station)
+        expect(subject.fare).to eq(described_class::PENALTY_FARE)
       end
 
-      it 'returns journey fare or penalty' do
+      it 'returns penalty fare if exit_station is nil' do
         subject = described_class.new(entry_station)
+        subject.finish_journey(nil)
+        expect(subject.fare).to eq(described_class::PENALTY_FARE)
       end
 
     end
