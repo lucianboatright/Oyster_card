@@ -33,16 +33,27 @@ describe Oystercard do
       expect { subject.touch_in(entry_station) }.to raise_error "Sorry you don't have enough!!"
     end
 
+
+    it 'second touch in after no touch out penalty will be charged' do
+      subject.top_up(20)
+      subject.touch_in(entry_station)
+      expect{ subject.touch_in(entry_station)}.to change { subject.card_balance }.by -6
+    end
   end
 
   describe '#touch_out' do
     let(:entry_station) { double :station }
     let(:exit_station) { double :station }
    
-    it 'updates balance by minimum fare' do
+    it 'reduces balance by minimum fare after touch in and touch out' do
       subject.top_up(5)
       subject.touch_in(entry_station)
       expect { subject.touch_out(exit_station) }.to change { subject.card_balance }.by -1
+    end
+
+    it 'reduces balance by penalty fare after touch out without touch in' do
+      subject.top_up(10)
+      expect { subject.touch_out(exit_station) }.to change { subject.card_balance }.by -6
     end
   end
 

@@ -18,6 +18,7 @@ class Oystercard
 
   def touch_in(entry_station)
     fail "Sorry you don't have enough!!" if @card_balance < 1
+    deduct(@journey_log.journeys.last.fare) if in_journey?
     @journey_log.start(entry_station)
   end  
 
