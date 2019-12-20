@@ -2,9 +2,8 @@
 class Oystercard
 
   DEAFULT_LIMIT = 90
-  FAIR = 1
 
-  attr_reader :card_balance, :entry_station, :journey_history
+  attr_reader :card_balance, :journey_history
 
   def initialize
     @card_balance = 0
@@ -19,26 +18,24 @@ class Oystercard
   def touch_in(entry_station)
 
     fail "Sorry you don't have enough!!" if @card_balance < 1
-    @entry_station = entry_station
-    @journey = Hash.new
-    @journey["#{@entry_station}"] = nil
+    @journey_history <<  Journey.new(entry_station)
   end  
 
   def touch_out(exit_station)
-    deduct
-    @journey["#{@entry_station}"] = "#{exit_station}"
-    @journey_history << @journey
+    @journey_history.last.finish_journey(exit_station)
+    deduct(@journey_history.last.fare)
     @entry_station = nil
   end
 
   def in_journey?
-    !!entry_station
+    return false if @journey_history.empty?
+    !@journey_history.last.complete?
   end
 
   private
 
-  def deduct
-    @card_balance -= FAIR
+  def deduct(fare)
+    @card_balance -= fare
   end
 end
 

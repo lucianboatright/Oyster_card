@@ -1,4 +1,4 @@
-require 'oystercard'
+
 
 class Journey
 
@@ -16,8 +16,13 @@ class Journey
   end
 
   def fare
-    return MINIMUM_FARE if entry_station && exit_station
+    return MINIMUM_FARE if complete?
     PENALTY_FARE
+  end
+
+  def complete?
+    return true if entry_station && exit_station
+    false
   end
 
 end
