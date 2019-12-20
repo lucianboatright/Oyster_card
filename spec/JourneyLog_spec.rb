@@ -21,10 +21,9 @@ describe JourneyLog do
       subject.finish(exit_station)
       expect(subject.journey_history.length).to eq 1
     end
-    it 'creates new journey and adds it to journey history on calling finish twice without start' do
+    it 'creates new journey and adds it to journey history on calling finish without start' do
       subject.finish(exit_station)
-      subject.finish(exit_station)
-      expect(subject.journey_history.length).to eq 2
+      expect(subject.journey_history.length).to eq 1
     end
   end
 end
