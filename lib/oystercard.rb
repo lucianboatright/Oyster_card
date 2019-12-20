@@ -16,7 +16,6 @@ class Oystercard
   end
 
   def touch_in(entry_station)
-
     fail "Sorry you don't have enough!!" if @card_balance < 1
     @journey_history <<  Journey.new(entry_station)
   end  
