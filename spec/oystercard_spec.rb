@@ -33,11 +33,6 @@ describe Oystercard do
       expect { subject.touch_in(entry_station) }.to raise_error "Sorry you don't have enough!!"
     end
 
-    it 'attaches station to attribute' do
-      subject.top_up(5)
-      subject.touch_in(entry_station)
-      expect(subject.journey_history.length).to eq 1 
-    end
   end
 
   describe '#touch_out' do

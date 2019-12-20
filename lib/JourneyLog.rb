@@ -11,13 +11,14 @@ class JourneyLog
 
   def finish(exit_station)
     start(nil) if @journey_history.empty?
-    @journey_history.last.finish_journey(exit_station)
+    current_journey.finish_journey(exit_station)
   end
 
   def journeys
     @journey_history
   end
 
+ 
 private
   
   def create_journey_history
@@ -27,6 +28,5 @@ private
   def current_journey
     @journey_history.last
   end
-
 
 end
